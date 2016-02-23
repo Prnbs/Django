@@ -1,11 +1,12 @@
 from django.db import models
 
-# Create your models here.
+
 class Tags(models.Model):
     tags = models.TextField()
 
     def __str__(self):
         return self.tags
+
 
 class URL(models.Model):
     url = models.TextField()
@@ -13,6 +14,7 @@ class URL(models.Model):
 
     def __str__(self):
         return self.url
+
 
 class User(models.Model):
     email = models.EmailField()
