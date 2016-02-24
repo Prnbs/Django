@@ -45,3 +45,31 @@ def get_all_tags_for_url(request):
     else:
         return render(request, 'search_links.html')
 
+
+def get_urls_for_tag(request):
+    errors = []
+    if 'email' in request.GET:
+        if 'tag' in request.GET:
+            mail_id = request.GET['email']
+            input_tag = request.GET['tag']
+            if not mail_id or not input_tag:
+                errors.append("Both fields are required")
+                return render(request, 'search_tag.html', {'errors':errors})
+            else:
+                user = User.objects.get(email=mail_id)
+                urls = user.url.all()
+                tagged_urls = set()
+                for url in urls:
+                    tags = url.tags.all()
+                    for tag in tags:
+                        if str(tag) == input_tag:
+                            tagged_urls.add(url)
+                return render(request, 'search_tag.html', {'tagged_url':tagged_urls})
+        else:
+            errors.append("Both fields are required")
+            return render(request, 'search_tag.html', {'errors':errors})
+    else:
+        return render(request, 'search_tag.html')
+
+
+
