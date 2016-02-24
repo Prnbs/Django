@@ -17,7 +17,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from mysite.views import hello, current_datetime, hours_ahead,display_meta, contact
 from books import views as book_views
-from links_everywhere.views import get_my_saved_links
+from links_everywhere.views import get_my_saved_links, get_all_tags_for_url
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^meta/$', display_meta),
     url(r'^search/$', book_views.search),
     url(r'^contact/$', contact),
-    url(r'^getmyurl/$', get_my_saved_links)
+    url(r'^getmyurl/$', get_my_saved_links),
+    url(r'^getmytags/$', get_all_tags_for_url)
 
 ]

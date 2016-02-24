@@ -25,3 +25,23 @@ def get_my_saved_links(request):
             return render(request, 'search_form.html', {'tags_and_urls': urls_and_tags})
     else:
         return render(request, 'search_form.html')
+
+
+def get_all_tags_for_url(request):
+    errors = []
+    if 'link' in request.GET:
+        url = request.GET['link']
+        if not url:
+            errors.append('Enter an url')
+            return render(request, 'search_links.html', {'errors':errors})
+        else:
+            urls = URL.objects.filter(url=url)
+            unique_tags = set()
+            for url in urls:
+                tags = url.tags.all()
+                for tag in tags:
+                    unique_tags.add(tag)
+            return render(request, 'search_links.html', {'unique_tags':unique_tags})
+    else:
+        return render(request, 'search_links.html')
+
